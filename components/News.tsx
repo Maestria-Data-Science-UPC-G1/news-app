@@ -9,6 +9,7 @@ const News = () => {
     const [search, setSearch] = useState("")
     const [lenNodes, setLenNodes] = useState(0)
     const [lenEdges, setLenEdges] = useState(0)
+    const [news, setNews] = useState([])
 
     const generateGraph = async () => {
         setLoadingGraph(true)
@@ -18,6 +19,7 @@ const News = () => {
         setGraph(graphGenerated)
         setLenNodes(graphGenerated.nodes.length)
         setLenEdges(graphGenerated.links.length)
+        setNews(graphGenerated.nodes)
         setLoadingGraph(false)
     }
 
@@ -54,13 +56,80 @@ const News = () => {
                 <NetworkDiagram data={graph} width={800} height={550} />
             }
 
-
-
             <ul className="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                 <li className="w-full px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600">Nodes: {lenNodes}</li>
                 <li className="w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600">Edges: {lenEdges}</li>
             </ul>
 
+
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" className="px-2 py-3">
+                                ID
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Title
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Author
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Source
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Published
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Link
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {news.map((node) => (
+                            <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                                <th scope="row" className="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {node.id}
+                                </th>
+                                <td className="px-6 py-4">
+                                    {node.title}
+                                </td>
+                                <td className="px-6 py-4">
+                                    {node.author}
+                                </td>
+                                <td className="px-6 py-4">
+                                    {node.group}
+                                </td>
+                                <td className="px-6 py-4">
+                                    {node.published_at}
+                                </td>
+                                <td className="px-6 py-4">
+                                    <a href={node.url} target="_blank" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Go</a>
+                                </td>
+                            </tr>
+                        ))}
+
+                        <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                Apple MacBook Pro 17"
+                            </th>
+                            <td className="px-6 py-4">
+                                Silver
+                            </td>
+                            <td className="px-6 py-4">
+                                Laptop
+                            </td>
+                            <td className="px-6 py-4">
+                                $2999
+                            </td>
+                            <td className="px-6 py-4">
+                                <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
 
 
