@@ -10,7 +10,6 @@ const News = () => {
     const [search, setSearch] = useState("")
     const [lenNodes, setLenNodes] = useState(0)
     const [lenEdges, setLenEdges] = useState(0)
-    //const [news, setNews] = useState<Node>(() => []);
     const [news, setNews] = useState<Node[]>([]);
 
     const generateGraph = async () => {
