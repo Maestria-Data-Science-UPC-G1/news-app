@@ -6,7 +6,7 @@ import { Data, Node } from './graph/data';
 
 const News = () => {
     const [graph, setGraph] = useState<Data>({ nodes: [], links: [] })
-    const [loadingGraph, setLoadingGraph] = useState(true)
+    const [loadingGraph, setLoadingGraph] = useState(false)
     const [search, setSearch] = useState("")
     const [lenNodes, setLenNodes] = useState(0)
     const [lenEdges, setLenEdges] = useState(0)
