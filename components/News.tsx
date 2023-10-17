@@ -13,7 +13,7 @@ const News = () => {
 
     const generateGraph = async () => {
         setLoadingGraph(true)
-        const result = await fetch('http://localhost:5000/api/news?query=' + search)
+        const result = await fetch(`${process.env.NEXT_PUBLIC_API_URL }/api/news?query=${search}`)
         const response = await result.json()
         const graphGenerated = response.data
         setGraph(graphGenerated)
