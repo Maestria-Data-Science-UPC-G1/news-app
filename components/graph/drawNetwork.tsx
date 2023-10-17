@@ -24,9 +24,11 @@ export const drawNetwork = (
   context.lineWidth = 1;
   links.forEach((link) => {
     context.beginPath();
-    context.moveTo(link.source.x, link.source.y);
-    context.lineTo(link.target.x, link.target.y);
-    context.stroke();
+    if (link.source.x && link.source.y && link.target.x && link.target.y) {
+      context.moveTo(link.source.x, link.source.y);
+      context.lineTo(link.target.x, link.target.y);
+      context.stroke();
+    }
   });
 
   // Draw the nodes

@@ -8,8 +8,10 @@ export interface Node extends d3.SimulationNodeDatum {
 }
 
 export interface Link extends d3.SimulationLinkDatum<Node> {
-  source: string;
-  target: string;
+  //source: string;
+  //target: string;
+  source: Node;
+  target: Node;
   value: number;
 }
 
