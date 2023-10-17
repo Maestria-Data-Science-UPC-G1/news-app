@@ -1,4 +1,4 @@
-import { data } from './data';
+//import { data } from './data';
 import { NetworkDiagram } from './NetworkDiagram';
 
 export const NetworkDiagramLesMiserablesDemo = ({
@@ -8,5 +8,5 @@ export const NetworkDiagramLesMiserablesDemo = ({
   if (width === 0) {
     return null;
   }
-  return <NetworkDiagram data={data} width={width} height={height} />;
+  return <></>;
 };

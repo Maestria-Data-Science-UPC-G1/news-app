@@ -1,15 +1,17 @@
 "use client";
 
-import { use, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { NetworkDiagram } from "./graph/NetworkDiagram"
+import { Data, Node } from './graph/data';
 
 const News = () => {
-    const [graph, setGraph] = useState()
+    const [graph, setGraph] = useState<Data>({ nodes: [], links: [] })
     const [loadingGraph, setLoadingGraph] = useState(true)
     const [search, setSearch] = useState("")
     const [lenNodes, setLenNodes] = useState(0)
     const [lenEdges, setLenEdges] = useState(0)
-    const [news, setNews] = useState([])
+    //const [news, setNews] = useState<Node>(() => []);
+    const [news, setNews] = useState<Node[]>([]);
 
     const generateGraph = async () => {
         setLoadingGraph(true)
