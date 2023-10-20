@@ -54,7 +54,7 @@ const News = () => {
 
             {loadingGraph ?
                 <div className="text-center">Loading...</div> :
-                <NetworkDiagram data={graph} width={800} height={550} />
+                <NetworkDiagram data={graph} width={1000} height={600} />
             }
 
             <ul className="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">

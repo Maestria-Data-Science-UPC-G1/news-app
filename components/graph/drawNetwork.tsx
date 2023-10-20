@@ -44,7 +44,7 @@ export const drawNetwork = (
     context.moveTo(node.x + RADIUS, node.y);
     context.arc(node.x, node.y, RADIUS, 0, 2 * Math.PI);
     context.fillStyle = colorScale(String(node.group));
-    context.fillText(node.title, node.x, node.y);
+    context.fillText(node.id, node.x, node.y);
     context.stroke();
     context.fill();
   });

@@ -1,6 +1,3 @@
-//import { data } from './data';
-import { NetworkDiagram } from './NetworkDiagram';
-
 export const NetworkDiagramLesMiserablesDemo = ({
   width = 700,
   height = 400,
