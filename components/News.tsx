@@ -14,7 +14,7 @@ const News = () => {
 
     const generateGraph = async () => {
         setLoadingGraph(true)
-        const result = await fetch(`${process.env.NEXT_PUBLIC_API_URL }/api/news?query=${search}`)
+        const result = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/news?query=${search}`)
         const response = await result.json()
         const graphGenerated = response.data
         setGraph(graphGenerated)
@@ -89,7 +89,16 @@ const News = () => {
                     </thead>
                     <tbody>
                         {news.map((node) => (
-                            <tr key={node.id} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                            <tr
+                                key={node.id}
+                                className={`bg-white border-b dark:bg-gray-900 dark:border-gray-700 ${
+                                    node.sentiment === "Positive"
+                                        ? "bg-green-100 dark:bg-green-800"
+                                        : node.sentiment === "Negative"
+                                        ? "bg-red-100 dark:bg-red-800"
+                                        : "bg-blue-100 dark:bg-blue-800"
+                                }`}
+                            >
                                 <th scope="row" className="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {node.id}
                                 </th>
