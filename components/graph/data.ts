@@ -6,6 +6,7 @@ export interface Node extends d3.SimulationNodeDatum {
   published_at: string;
   url: string;
   sentiment: string;
+  similar: Similar[];
 }
 
 export interface Link extends d3.SimulationLinkDatum<Node> {
@@ -20,3 +21,8 @@ export type Data = {
   nodes: Node[];
   links: Link[];
 };
+
+export type Similar = {
+  id: string;
+  url: string;
+}
