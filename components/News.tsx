@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { NetworkDiagram } from "./graph/NetworkDiagram"
 import { Data, Node } from './graph/data';
+import Spinner from './Spinner';
 
 const News = () => {
     const [graph, setGraph] = useState<Data>({ nodes: [], links: [] })
@@ -13,6 +14,7 @@ const News = () => {
     const [news, setNews] = useState<Node[]>([]);
 
     const generateGraph = async () => {
+        setGraph({ nodes: [], links: [] })
         setLoadingGraph(true)
         const result = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/news?query=${search}`)
         const response = await result.json()
@@ -27,7 +29,7 @@ const News = () => {
     return (
         <div className="bg-indigo-100">
 
-            <form id='search-form'>
+            <form id='search-form' onSubmit={(e) => { e.preventDefault(); generateGraph(); }}>
                 <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                 <div className="relative">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -43,9 +45,8 @@ const News = () => {
                         onChange={(e) => setSearch(e.target.value)}
                     />
                     <button
-                        type="button"
+                        type="submit"
                         className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                        onClick={() => generateGraph()}
                     >
                         Search
                     </button>
@@ -53,7 +54,7 @@ const News = () => {
             </form>
 
             {loadingGraph ?
-                <div className="text-center">Loading...</div> :
+                <Spinner /> :
                 <NetworkDiagram data={graph} width={1000} height={600} />
             }
 
@@ -64,63 +65,67 @@ const News = () => {
 
 
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" className="px-2 py-3">
-                                ID
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Title
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Author
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Source
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Published
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Link
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {news.map((node) => (
-                            <tr
-                                key={node.id}
-                                className={`bg-white border-b dark:bg-gray-900 dark:border-gray-700 ${
-                                    node.sentiment === "Positive"
-                                        ? "bg-green-100 dark:bg-green-800"
-                                        : node.sentiment === "Negative"
-                                        ? "bg-red-100 dark:bg-red-800"
-                                        : "bg-blue-100 dark:bg-blue-800"
-                                }`}
-                            >
-                                <th scope="row" className="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {node.id}
+                {loadingGraph ?
+                    <Spinner /> :
+                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" className="px-2 py-3">
+                                    ID
                                 </th>
-                                <td className="px-6 py-4">
-                                    {node.title}
-                                </td>
-                                <td className="px-6 py-4">
-                                    {node.author}
-                                </td>
-                                <td className="px-6 py-4">
-                                    {node.group}
-                                </td>
-                                <td className="px-6 py-4">
-                                    {node.published_at}
-                                </td>
-                                <td className="px-6 py-4">
-                                    <a href={node.url} target="_blank" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Go</a>
-                                </td>
+                                <th scope="col" className="px-6 py-3">
+                                    Title
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Author
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Source
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Published
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Link
+                                </th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {news.map((node) => (
+                                <tr
+                                    key={node.id}
+                                    className={`bg-white border-b dark:bg-gray-900 dark:border-gray-700 ${node.sentiment === "Positive"
+                                            ? "bg-green-100 dark:bg-green-800"
+                                            : node.sentiment === "Negative"
+                                                ? "bg-red-100 dark:bg-red-800"
+                                                : "bg-blue-100 dark:bg-blue-800"
+                                        }`}
+                                >
+                                    <th scope="row" className="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {node.id}
+                                    </th>
+                                    <td className="px-6 py-4">
+                                        {node.title}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        {node.author}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        {node.group}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        {node.published_at}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <a href={node.url} target="_blank" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Go</a>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                }
+
+
             </div>
 
 
